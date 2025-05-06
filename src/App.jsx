@@ -23,6 +23,7 @@ const App = () => {
   const [selectedPoint, setSelectedPoint] = useState(null);
   const [hoveredPoint, setHoveredPoint] = useState(null);
   const [currentBasemap, setCurrentBasemap] = useState(BASEMAPS[0]);
+  const [cursor, setCursor] = useState('auto');
 
   const onSelectCity = useCallback(({ longitude, latitude }) => {
     mapRef.current?.flyTo({
@@ -75,11 +76,13 @@ const App = () => {
       latitude: feature.geometry.coordinates[1],
       properties: feature.properties,
     });
+    setCursor('pointer');
   }, []);
 
   // Clear hover when mouse leaves the map
   const onMouseLeave = useCallback(() => {
     setHoveredPoint(null);
+    setCursor('auto');
   }, []);
 
   return (
@@ -92,6 +95,7 @@ const App = () => {
         onClick={onClick}
         onMouseMove={onHover}
         onMouseLeave={onMouseLeave}
+        cursor={cursor}
       >
         <GeolocateControl position="top-left" />
         <FullscreenControl position="top-left" />
