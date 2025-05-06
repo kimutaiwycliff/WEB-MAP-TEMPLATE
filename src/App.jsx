@@ -17,6 +17,7 @@ import {
 import { useCallback } from 'react';
 import { getMagnitudeColor, formatDate } from './utils';
 import { BASEMAPS, initialViewState } from '../public/constants';
+import DraggableMarker from './DraggableMarker';
 
 const App = () => {
   const mapRef = useRef();
@@ -101,6 +102,7 @@ const App = () => {
         <FullscreenControl position="top-left" />
         <NavigationControl position="top-left" />
         <ScaleControl />
+
         <Source
           id="earthquakes"
           type="geojson"
@@ -190,6 +192,8 @@ const App = () => {
             </div>
           </Popup>
         )}
+
+        <DraggableMarker />
       </Map>
       <ControlPanel onSelectCity={onSelectCity} />
       <BasemapSwitcher
