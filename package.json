@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@maplibre/maplibre-gl-geocoder": "^1.8.0",
+    "immutable": "^5.1.2",
     "maplibre-gl": "^5.4.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

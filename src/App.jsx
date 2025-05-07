@@ -18,6 +18,7 @@ import { useCallback } from 'react';
 import { getMagnitudeColor, formatDate } from './utils';
 import { BASEMAPS, initialViewState } from '../public/constants';
 import DraggableMarker from './DraggableMarker';
+import { StyleControls } from './StylesControl';
 
 const App = () => {
   const mapRef = useRef();
@@ -25,6 +26,7 @@ const App = () => {
   const [hoveredPoint, setHoveredPoint] = useState(null);
   const [currentBasemap, setCurrentBasemap] = useState(BASEMAPS[0]);
   const [cursor, setCursor] = useState('auto');
+  const [mapStyle, setMapStyle] = useState(BASEMAPS[0].url);
 
   const onSelectCity = useCallback(({ longitude, latitude }) => {
     mapRef.current?.flyTo({
@@ -86,12 +88,22 @@ const App = () => {
     setCursor('auto');
   }, []);
 
+  // Handle basemap changes
+  const handleBasemapChange = useCallback((basemap) => {
+    setCurrentBasemap(basemap);
+    setMapStyle(basemap.url); // Reset to original style
+  }, []);
+
+  // Handle style updates from StyleControls
+  const handleStyleChange = useCallback((newStyle) => {
+    setMapStyle(newStyle);
+  }, []);
   return (
     <>
       <Map
         ref={mapRef}
         initialViewState={initialViewState}
-        mapStyle={currentBasemap.url}
+        mapStyle={mapStyle}
         interactiveLayerIds={[clusterLayer.id, unclusteredPointLayer.id]}
         onClick={onClick}
         onMouseMove={onHover}
@@ -195,11 +207,17 @@ const App = () => {
 
         <DraggableMarker />
       </Map>
-      <ControlPanel onSelectCity={onSelectCity} />
+      <div className="controls-container">
+        <ControlPanel onSelectCity={onSelectCity} />
+        <StyleControls
+          currentBasemap={currentBasemap}
+          onChange={handleStyleChange}
+        />
+      </div>
       <BasemapSwitcher
         basemaps={BASEMAPS}
         currentBasemap={currentBasemap}
-        setCurrentBasemap={setCurrentBasemap}
+        setCurrentBasemap={handleBasemapChange}
       />
     </>
   );
