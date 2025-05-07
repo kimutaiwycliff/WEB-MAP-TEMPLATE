@@ -185,6 +185,18 @@ export const initialViewState = {
   zoom: 12,
   bearing: 0,
   pitch: 0,
+  minZoom: 0,
+  maxZoom: 20,
+  minPitch: 0,
+  maxPitch: 85,
+  scrollZoom: true,
+  boxZoom: true,
+  dragRotate: true,
+  dragPan: true,
+  keyboard: true,
+  doubleClickZoom: true,
+  touchZoomRotate: true,
+  touchPitch: true,
 };
 
 export const ICON = `M20.2,15.7L20.2,15.7c1.1-1.6,1.8-3.6,1.8-5.7c0-5.6-4.5-10-10-10S2,4.5,2,10c0,2,0.6,3.9,1.6,5.4c0,0.1,0.1,0.2,0.2,0.3
